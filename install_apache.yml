@@ -1,0 +1,22 @@
+---
+  
+- hosts: servers
+  become: true
+  tasks:
+  - name : install Apache2
+    yum: name=httpd update_cache=yes state=latest
+
+  - name : enable service of apache
+    ansible.builtin.service:
+      name: httpd
+      enabled: yes
+
+  - name: Start service httpd, if not started
+    ansible.builtin.service:
+      name: httpd
+      state: started
+
+  - name: Restart service httpd, in all cases
+    ansible.builtin.service:
+      name: httpd
+      state: restarted
